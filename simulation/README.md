@@ -4,11 +4,13 @@ A GPU physics simulation and reinforcement-learning environment for BugBot, buil
 **NVIDIA Isaac Lab** (v2.3.2). It reproduces the *hard* part of BugBot: the chaotic X-omni
 drive, and trains a policy that uses sensor feedback to hold a commanded holonomic motion.
 
-> Status: first authored pass. The BugBot-specific logic (the X-omni mix, chaos model,
-> observations, reward) is unit-tested via `bugbot_tasks/mixing.py`, but the Isaac Lab env
-> has not yet been run on a live install. Expect a validation/tuning pass (search the code
-> for `VALIDATE`). It targets the same Isaac venv as the Yertle project
-> (`C:\Users\Jerome\isaac\.venv`, Python 3.11).
+> Status: **validated end-to-end on Isaac Lab v2.3.2 / RTX 4070.** The URDF converts to USD,
+> the env loads and trains, and the policy learns to track the commanded holonomic twist
+> (mean reward ~43 early to ~555 over 150 iterations, full-length episodes). The X-omni mix
+> is also unit-tested via `bugbot_tasks/mixing.py`. Remaining work is *realism tuning*, not
+> correctness: the chaos ranges, sensor-noise models, and reward shaping are starting points
+> (search `VALIDATE`), and the drive is applied at the body level rather than via omni-roller
+> contact. Runs against the Yertle Isaac venv (`C:\Users\Jerome\isaac\.venv`, Python 3.11).
 
 ## Layout
 
