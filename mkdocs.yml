@@ -1,6 +1,6 @@
 site_name: BugBot
 site_description: Build, program, and simulate BugBot. Firmware, Python library, protocol, and simulation reference.
-site_url: https://bugbotlab.github.io/bugbot/
+site_url: https://www.bugbotlab.com/bugbot/
 
 repo_url: https://github.com/BugBotLab/bugbot
 repo_name: BugBotLab/bugbot
