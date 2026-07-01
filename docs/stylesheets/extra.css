@@ -1,0 +1,129 @@
+/* BugBotLab theme — matches bugbotlab.github.io */
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&family=Nunito:wght@300;400;600;700;800&display=swap');
+
+/* ── Colour tokens ── */
+:root {
+  --bb-green:       #A2C594;
+  --bb-green-dark:  #85B373;
+  --bb-green-deep:  #6a9a5c;
+  --bb-dark:        #2e2e2e;
+  --bb-secondary:   #5b6b73;
+  --bb-sage:        #BFD7B5;
+  --bb-border:      #e0ecdc;
+  --bb-light-bg:    #f4f8f1;
+}
+
+/* ── Material palette overrides (default / light scheme) ── */
+[data-md-color-scheme="default"] {
+  /* Header / nav bar background */
+  --md-primary-fg-color:        #2e2e2e;
+  --md-primary-fg-color--light: rgba(255, 255, 255, .54);
+  --md-primary-fg-color--dark:  #1a1a1a;
+  --md-primary-bg-color:        #ffffff;
+  --md-primary-bg-color--light: rgba(255, 255, 255, .7);
+
+  /* Interactive accent — links, active tabs, focus rings */
+  --md-accent-fg-color:             #85B373;
+  --md-accent-fg-color--transparent: rgba(133, 179, 115, .1);
+  --md-accent-bg-color:             #ffffff;
+  --md-accent-bg-color--light:      rgba(255, 255, 255, .7);
+
+  /* Body text */
+  --md-default-fg-color:         #2e2e2e;
+  --md-default-fg-color--light:  #5b6b73;
+  --md-default-fg-color--lighter: #8a959a;
+  --md-default-bg-color:         #ffffff;
+  --md-default-bg-color--light:  #f4f8f1;
+  --md-default-bg-color--lighter: #f9fbf8;
+
+  /* Code blocks */
+  --md-code-bg-color: #f4f8f1;
+  --md-code-fg-color: #2e2e2e;
+}
+
+/* ── Typography ── */
+body,
+.md-typeset {
+  font-family: 'Nunito', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Varela Round', 'Nunito', sans-serif;
+  font-weight: 400;
+}
+
+/* Keeps the site name in the header on-brand */
+.md-header__title {
+  font-family: 'Varela Round', sans-serif;
+}
+
+/* ── Navigation ── */
+.md-nav__link--active {
+  color: var(--bb-green-dark) !important;
+  font-weight: 700;
+}
+
+.md-nav__link:is(:focus, :hover) {
+  color: var(--bb-green-dark);
+}
+
+/* Active tab underline */
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  color: var(--bb-green) !important;
+}
+
+/* ── Content links ── */
+.md-content a {
+  color: var(--bb-green-dark);
+  text-decoration: none;
+}
+
+.md-content a:hover {
+  color: var(--bb-green-deep);
+  text-decoration: underline;
+}
+
+/* ── Inline code ── */
+.md-typeset code {
+  background-color: var(--bb-light-bg);
+  color: var(--bb-dark);
+  border-radius: 3px;
+  border: 1px solid var(--bb-border);
+  padding: 0 .25em;
+}
+
+/* ── Code block header (copy button bar) ── */
+.md-typeset .highlight .hll {
+  background-color: rgba(162, 197, 148, .15);
+}
+
+/* ── Admonition: note variant uses sage green ── */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border-color: var(--bb-green);
+}
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary {
+  background-color: rgba(162, 197, 148, .12);
+}
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before {
+  background-color: var(--bb-green);
+  -webkit-mask-image: var(--md-admonition-icon--note);
+          mask-image: var(--md-admonition-icon--note);
+}
+
+/* ── Search highlight ── */
+.md-search-result mark {
+  background-color: rgba(162, 197, 148, .45);
+  color: var(--bb-dark);
+}
+
+/* ── Footer ── */
+.md-footer {
+  background-color: var(--bb-dark);
+}
+.md-footer-meta {
+  background-color: #1a1a1a;
+}

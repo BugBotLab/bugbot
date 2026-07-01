@@ -1,7 +1,7 @@
 # Architecture
 
 High-level view of BugBot across firmware, simulation, and ROS 2. For the firmware service
-architecture in detail, see [`../firmware/ARCHITECTURE.md`](../firmware/ARCHITECTURE.md).
+architecture in detail, see [`../firmware/ARCHITECTURE.md`](https://github.com/BugBotLab/bugbot/blob/main/firmware/ARCHITECTURE.md).
 
 ## The core problem
 
@@ -23,8 +23,8 @@ answer is sensing plus control, not precision mechanics.
 ```
 
 The firmware runs this loop today with a hand-tuned controller and the EKF. The
-[`simulation/`](../simulation) reproduces the chaotic drive and trains a policy to perform
-the same corrective role, and [`ros2/`](../ros2) exposes it as a standard ROS 2 velocity
+[`simulation/`](https://github.com/BugBotLab/bugbot/tree/main/simulation) reproduces the chaotic drive and trains a policy to perform
+the same corrective role, and [`ros2/`](https://github.com/BugBotLab/bugbot/tree/main/ros2) exposes it as a standard ROS 2 velocity
 interface and bridges the policy to sim and hardware.
 
 ## The drive mix
