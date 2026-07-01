@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+  BugBot: 4-wheel holonomic (X-omni) micro-robot.
+
+  A square chassis with four wheels at the corners, each spin axis oriented along
+  the diagonal (the "X" layout), on continuous joints. Dimensions are approximate
+  starting points (edit to match the mechanical CAD once available).
+
+  Frame: x forward, y left, z up (ROS REP-103). Wheel naming follows the firmware
+  motor order used elsewhere: BR, FR, BL, FL.
+
+  NOTE: true omni-wheel rollers are not modelled here. The holonomic X-drive is
+  applied at the body level in the Isaac Lab env (see bugbot_env.py) using the
+  same mix as the firmware; these wheels are the visible articulation and spin
+  for feedback. Inertias are rough and are refined at load time by Isaac Lab.
+-->
+<robot name="bugbot">
+
+  <material name="chassis"><color rgba="0.15 0.6 0.2 1.0"/></material>
+  <material name="wheel"><color rgba="0.1 0.1 0.1 1.0"/></material>
+
+  <!-- ===================== chassis ===================== -->
+  <link name="base_link">
+    <visual>
+      <geometry><box size="0.12 0.12 0.04"/></geometry>
+      <material name="chassis"/>
+    </visual>
+    <collision>
+      <geometry><box size="0.12 0.12 0.04"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.35"/>
+      <!-- box inertia: (1/12)m(y^2+z^2), (x^2+z^2), (x^2+y^2), sides 0.12/0.12/0.04 -->
+      <inertia ixx="4.67e-4" ixy="0" ixz="0" iyy="4.67e-4" iyz="0" izz="8.40e-4"/>
+    </inertial>
+  </link>
+
+  <!-- ===================== wheels ===================== -->
+  <!-- Reusable wheel inertia macro is not available in plain URDF; values repeated.
+       Cylinder r=0.03, len=0.02, m=0.03:
+         I_axial   = 0.5 m r^2                 = 1.35e-5
+         I_radial  = (1/12) m (3r^2 + h^2)     = 7.75e-6  -->
+
+  <link name="wheel_fr">
+    <visual><geometry><cylinder radius="0.03" length="0.02"/></geometry><material name="wheel"/></visual>
+    <collision><geometry><cylinder radius="0.03" length="0.02"/></geometry></collision>
+    <inertial><mass value="0.03"/><inertia ixx="7.75e-6" ixy="0" ixz="0" iyy="7.75e-6" iyz="0" izz="1.35e-5"/></inertial>
+  </link>
+  <joint name="joint_wheel_fr" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_fr"/>
+    <origin xyz="0.05 -0.05 -0.01" rpy="1.5708 0 -0.7854"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <link name="wheel_fl">
+    <visual><geometry><cylinder radius="0.03" length="0.02"/></geometry><material name="wheel"/></visual>
+    <collision><geometry><cylinder radius="0.03" length="0.02"/></geometry></collision>
+    <inertial><mass value="0.03"/><inertia ixx="7.75e-6" ixy="0" ixz="0" iyy="7.75e-6" iyz="0" izz="1.35e-5"/></inertial>
+  </link>
+  <joint name="joint_wheel_fl" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_fl"/>
+    <origin xyz="0.05 0.05 -0.01" rpy="1.5708 0 0.7854"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <link name="wheel_bl">
+    <visual><geometry><cylinder radius="0.03" length="0.02"/></geometry><material name="wheel"/></visual>
+    <collision><geometry><cylinder radius="0.03" length="0.02"/></geometry></collision>
+    <inertial><mass value="0.03"/><inertia ixx="7.75e-6" ixy="0" ixz="0" iyy="7.75e-6" iyz="0" izz="1.35e-5"/></inertial>
+  </link>
+  <joint name="joint_wheel_bl" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_bl"/>
+    <origin xyz="-0.05 0.05 -0.01" rpy="1.5708 0 2.3562"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <link name="wheel_br">
+    <visual><geometry><cylinder radius="0.03" length="0.02"/></geometry><material name="wheel"/></visual>
+    <collision><geometry><cylinder radius="0.03" length="0.02"/></geometry></collision>
+    <inertial><mass value="0.03"/><inertia ixx="7.75e-6" ixy="0" ixz="0" iyy="7.75e-6" iyz="0" izz="1.35e-5"/></inertial>
+  </link>
+  <joint name="joint_wheel_br" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_br"/>
+    <origin xyz="-0.05 -0.05 -0.01" rpy="1.5708 0 -2.3562"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+</robot>
