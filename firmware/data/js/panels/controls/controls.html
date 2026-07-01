@@ -1,0 +1,12 @@
+<button id="zeroBtn" title="Zero heading / reset pose" style="width:100%;margin-bottom:8px">ZERO</button>
+<button id="calibBtn" title="Run kinematic calibration — needs an AprilTag visible" style="width:100%;margin-bottom:4px">CALIBRATE</button>
+<div id="calibStatus" style="text-align:center;font-size:0.75em;color:#888;margin-bottom:6px">idle</div>
+<button id="locSweepBtn" title="Rotate 360° to find absolute position and heading" style="width:100%;margin-bottom:4px">LOC SWEEP</button>
+<div id="locSweepStatus" style="text-align:center;font-size:0.75em;color:#888;margin-bottom:6px">idle</div>
+<canvas id="joyRCanvas" style="display:block;width:100%;touch-action:none;cursor:none"></canvas>
+<div class="speed-row">
+  <div class="speed-header">
+    <span>Rotation</span><span id="rotSpeedVal">70%</span>
+  </div>
+  <input id="rotSpeedRange" type="range" min="0" max="1" step="0.05" value="0.7">
+</div>

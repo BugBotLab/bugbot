@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>BugBot Web UI</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+  <header>
+    <h1>🐞 BugBot</h1>
+    <div id="wsStatus" class="pill bad">WS: disconnected</div>
+    <div id="stats" class="pill">pose 0 | lidar 0</div>
+    <div id="gpStatus" class="pill">GP: none</div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <label for="wsUrl" style="color:var(--muted)">ws:</label>
+      <input id="wsUrl" size="24" />
+      <button id="connectBtn">Connect</button>
+      <button id="gpBtn">🎮 Gamepad</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- placeholders that will be filled by partials.js -->
+    <section class="panel" id="panel-camera" data-partial="js/panels/camera/camera.html"></section>
+    <section class="panel" id="panel-viz"    data-partial="js/panels/viz/viz.html"></section>
+    <section class="panel" id="panel-controls" data-partial="js/panels/controls/controls.html"></section>
+  </main>
+
+  <!-- Shared: utils + WS first (they don’t depend on partial DOM) -->
+  <script type="module" src="js/shared/utils.js"></script>
+  <script type="module" src="js/shared/ws.js"></script>
+
+  <!-- OpenCV runtime (non-module) -->
+  <script src="opencv.js"></script>
+
+  <!-- Load partials, then hydrate panels (imports run AFTER injection) -->
+  <script type="module">
+    import { loadPartials } from './js/shared/partials.js';
+    import './js/shared/opencv-loader.js'; // sets window.Module, preloads cascade
+
+    await loadPartials();                  // fetch + inject the three panel HTMLs
+
+    // Now that the nodes exist, hydrate each panel:
+    await Promise.all([
+      import('./js/panels/camera/camera.js'),
+      import('./js/panels/viz/viz.js'),
+      import('./js/panels/controls/controls.js')
+    ]);
+  </script>
+</body>
+</html>

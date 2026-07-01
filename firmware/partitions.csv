@@ -1,0 +1,8 @@
+# BugBot XIAO ESP32-S3 — 8 MB flash partition table
+# Single-app layout (no OTA): 4 MB app + ~4 MB SPIFFS.
+# OTA removed because esp-dl adds ~500 KB to the binary; two equal-sized OTA
+# slots no longer fit in 8 MB while leaving room for the face-detect model.
+# Name,   Type, SubType,  Offset,   Size,     Flags
+nvs,      data, nvs,      0x9000,   0x5000,
+app0,     app,  factory,  0x10000,  0x400000,
+spiffs,   data, spiffs,   0x410000, 0x3f0000,

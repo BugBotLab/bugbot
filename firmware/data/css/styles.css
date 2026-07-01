@@ -1,0 +1,258 @@
+/* BugBot UI — light theme matching bugbotlab.com brand palette
+   Primary: #A2C594 (sage green)  Secondary: #7464a1 (purple)
+   Font: Nunito (loaded via Google Fonts in index.html)         */
+
+:root {
+  --bg:    #f2f6f3;
+  --panel: #ffffff;
+  --line:  #cddacd;
+  --txt:   #212529;
+  --muted: #6a8272;
+  --accent:#A2C594;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--txt);
+  font:14px/1.3 ui-sans-serif,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  overflow:hidden;
+}
+
+header {
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  border-bottom:1px solid var(--line);
+  background:var(--panel);
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+}
+header h1 { margin:0; font-size:16px; font-weight:800; letter-spacing:.02em; }
+header .pill {
+  padding:4px 10px;
+  border-radius:999px;
+  background:#f0f5f0;
+  color:var(--muted);
+  font-weight:700;
+  white-space:nowrap;
+  font-size:13px;
+  border:1px solid var(--line);
+}
+header .ok   { color:#2a6e42; border-color:#A2C594; background:#eaf4e5; }
+header .warn { color:#7a5a10; border-color:#d4b050; background:#faf4e0; }
+header .bad  { color:#8a3030; border-color:#d47070; background:#faeaea; }
+
+main {
+  flex:1;
+  display:grid;
+  grid-template-columns: 220px 1fr 220px;
+  gap:10px;
+  padding:10px;
+  overflow:hidden;
+  min-height:0;
+}
+
+.panel {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  min-height:0;
+  box-shadow:0 1px 6px rgba(0,0,0,0.06);
+}
+.panel h3 { margin:0 0 6px 0; font-size:13px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.06em; }
+.row { display:flex; align-items:center; gap:8px; margin:6px 0; }
+.row label { color:var(--muted); font-size:13px; }
+.row.spread { justify-content:space-between; }
+
+button, .btn {
+  background:#f5f8f5;
+  color:var(--txt);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:7px 12px;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:600;
+  transition:border-color .15s, background .15s;
+}
+button:hover  { border-color:var(--accent); background:#eaf2e7; }
+button:active { transform:translateY(1px); background:#dde8da; }
+
+input[type="range"] { width:100%; margin:4px 0; accent-color:var(--accent); }
+input[type="text"], input[type="number"], select {
+  padding:6px 8px;
+  background:#f8fbf8;
+  border:1px solid var(--line);
+  color:var(--txt);
+  border-radius:8px;
+  font-family:inherit;
+}
+code { background:#eef4ee; padding:2px 6px; border-radius:6px; }
+.foot { color:var(--muted); font-size:12px; margin-top:10px; }
+
+/* Field-centric toggle pill */
+#fcBtn { cursor:pointer; }
+#fcBtn:hover { filter:brightness(0.92); }
+
+/* Fullscreen button */
+#fsBtn {
+  margin-left:auto;
+  background:#f5f8f5;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:7px 10px;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  flex-shrink:0;
+}
+#fsBtn:hover  { border-color:var(--accent); color:var(--accent); }
+#fsBtn:active { transform:translateY(1px); }
+
+/* ── Side joystick panels ────────────────────────────────────────────────────── */
+#panel-joyL,
+#panel-controls {
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  padding:12px;
+}
+
+/* Push canvas+slider group to centre of remaining space */
+#panel-joyL > canvas,
+#panel-controls > canvas {
+  display:block;
+  width:100%;
+  aspect-ratio:1;
+  flex-shrink:0;
+  margin-top:auto;
+}
+#panel-joyL > .speed-row,
+#panel-controls > .speed-row {
+  margin-bottom:auto;
+}
+
+button.ok { color:#2a6e42; border-color:#A2C594; background:#eaf4e5; }
+button.ok:hover { background:#d5edcc; border-color:#7ab87a; }
+
+.joyL-controls,
+.joyR-controls {
+  flex:1;
+  overflow-y:auto;
+  padding:8px 12px 12px;
+  min-height:0;
+}
+
+.speed-row {
+  width:100%;
+  margin-top:10px;
+}
+.speed-header {
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:3px;
+  font-size:11px;
+  font-weight:700;
+  color:var(--muted);
+}
+
+/* Viz panel: no padding, canvas fills */
+#panel-viz {
+  padding:0;
+  overflow:hidden;
+}
+
+/* ── Tabbed center panel ────────────────────────────────────────────────────── */
+.tab-wrap {
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+#panel-viz .tab-bar {
+  flex-shrink:0;
+  display:flex;
+  border-bottom:1px solid var(--line);
+  background:var(--panel);
+}
+
+#panel-viz .tab-bar button {
+  background:transparent;
+  border:none;
+  border-bottom:2px solid transparent;
+  border-radius:0;
+  padding:8px 18px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  transition:color .15s, border-bottom-color .15s;
+}
+#panel-viz .tab-bar button:hover  { background:transparent; color:var(--txt); border-bottom-color:var(--muted); }
+#panel-viz .tab-bar button:active { transform:none; background:transparent; }
+#panel-viz .tab-bar button.active { color:#2a6e42; border-bottom-color:var(--accent); }
+
+.tab-content {
+  flex:1;
+  overflow:hidden;
+  min-height:0;
+  position:relative;
+}
+
+.tab-pane          { display:none; width:100%; height:100%; }
+.tab-pane.active   { display:block; }
+#tab-map           { overflow:hidden; }
+#tab-control       { overflow-y:auto; }
+#tab-camera        { overflow:hidden; }
+
+/* Control tab: 3-column grid */
+.ctrl-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  padding:14px;
+  align-content:start;
+}
+
+.ctrl-grid section {
+  background:#f8fbf8;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:12px 14px;
+}
+
+@media (max-width:900px) {
+  .ctrl-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:600px) {
+  .ctrl-grid { grid-template-columns:1fr; }
+}
+
+/* Mobile portrait */
+@media (max-width:700px) {
+  main {
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 220px;
+    gap:8px;
+    padding:8px;
+  }
+  #panel-viz      { grid-column:1 / 3; grid-row:1; }
+  #panel-joyL     { grid-column:1; grid-row:2; }
+  #panel-controls { grid-column:2; grid-row:2; }
+
+  #panel-joyL > canvas,
+  #panel-controls > canvas {
+    aspect-ratio:auto;
+    height:160px;
+    flex:0 0 160px;
+  }
+}

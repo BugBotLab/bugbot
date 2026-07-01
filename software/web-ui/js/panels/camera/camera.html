@@ -1,0 +1,24 @@
+<h3>Camera</h3>
+<div class="row">
+  <input id="camUrl" type="text" placeholder="http://&lt;ip&gt;:81/mjpeg">
+</div>
+<div class="camBox">
+  <img id="camStream" alt="camera stream (MJPEG)"/>
+  <canvas id="camOverlay"></canvas>
+</div>
+<div class="row spread" style="margin-top:10px">
+  <button id="camStart">Start</button>
+  <button id="camStop">Stop</button>
+  <button id="camSnap">Snapshot</button>
+</div>
+<div class="row" style="gap:10px">
+  <label style="min-width:85px">Vision:</label>
+  <select id="visionMode">
+    <option value="off">Off</option>
+    <option value="face" selected>Face (Haar)</option>
+  </select>
+  <button id="downloadFrame">Save Frame</button>
+</div>
+<div class="mini">
+  Endpoints: <code>/mjpeg</code> (stream), <code>/camera.jpg</code> (snapshot). Requires CORS on camera.
+</div>

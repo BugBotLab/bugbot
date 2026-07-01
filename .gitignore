@@ -1,0 +1,44 @@
+# ---- ESP-IDF firmware ----
+firmware/build/
+firmware/managed_components/
+firmware/sdkconfig
+firmware/sdkconfig.old
+firmware/dependencies.lock.bak
+**/*.bak
+
+# ---- Python / RL / simulation ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+simulation/learning/runs/
+**/runs/
+*.zip
+!**/policy.example.zip
+*.usd.cache/
+outputs/
+logs/
+*.tensorboard
+events.out.tfevents.*
+
+# ---- ROS 2 ----
+ros2/build/
+ros2/install/
+ros2/log/
+
+# ---- Node / web ----
+node_modules/
+
+# ---- Secrets (never commit real credentials) ----
+**/secrets.h
+**/WiFiConfig.local.h
+*.env
+.env
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+*.code-workspace

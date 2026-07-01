@@ -1,0 +1,21 @@
+## IDF Component Manager manifest for the BugBot main component.
+## After cloning this repo, run:
+##   idf.py update-dependencies
+## to fetch arduino-esp32 into managed_components/.
+
+dependencies:
+  idf: ">=5.1"
+  ## arduino-esp32 provides the Arduino core (Wire, Serial, WiFi, SPIFFS,
+  ## esp_camera, etc.) and exposes initArduino() for use in app_main().
+  espressif/arduino-esp32: ">=3.0.0"
+  espressif/esp32-camera: ">=2.0.0"
+  ## TinyUSB: required for USB CDC serial on ESP32-S3 USB-OTG port.
+  ## Without this, USB-Serial/JTAG is the only USB option and it
+  ## auto-enters download mode whenever a terminal connects.
+  espressif/esp_tinyusb: ">=0.14.0"
+  ## TFLite Micro: TinyMLService inference engine.
+  ## After adding this, run: idf.py update-dependencies
+  espressif/esp-tflite-micro: ">=1.0.0"
+  ## esp-dl: hardware-accelerated inference for FaceDetectService (HumanFaceDetect).
+  ## Uses .espdl FlatBuffers model format and the ESP32-S3 vector instructions.
+  espressif/esp-dl: ">=3.0.0"

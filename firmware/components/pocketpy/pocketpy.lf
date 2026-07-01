@@ -1,0 +1,6 @@
+# pocketpy SPIRAM placement.
+# pk_default_vm (184 KB), pk_string_table (256 KB), and the picoterm stdout
+# buffer (32 KB) are declared with __attribute__((section(".ext_ram.bss")))
+# directly in pocketpy.c, so they land in the IDF-managed .ext_ram.bss output
+# section that the startup code explicitly zeroes.  No linker-fragment mapping
+# is needed; this file is kept as a placeholder.

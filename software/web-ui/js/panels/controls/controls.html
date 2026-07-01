@@ -1,0 +1,31 @@
+<h3>Controls</h3>
+
+<div class="row spread"><label>Speed</label><strong><span id="speedVal">0.60</span></strong></div>
+<input id="speedRange" type="range" min="0" max="1" step="0.01" value="0.60">
+
+<div class="row spread"><label>Scale</label><strong><span id="scaleVal">0.5</span> px/mm</strong></div>
+<input id="scaleRange" type="range" min="0.05" max="3" step="0.05" value="0.5">
+
+<div class="row spread"><label>Grid</label><button id="toggleGrid">toggle</button></div>
+<div class="row spread"><label>Clear Map</label><button id="clearMap">clear</button></div>
+
+<h3 style="margin-top:16px">Drive</h3>
+<div class="grid">
+  <button data-dir="5">↶</button>
+  <button data-dir="1">↑</button>
+  <button data-dir="6">↷</button>
+  <button data-dir="3">←</button>
+  <button data-dir="0" class="btn">■</button>
+  <button data-dir="4">→</button>
+  <div></div>
+  <button data-dir="2">↓</button>
+  <div></div>
+</div>
+<div class="row">
+  <button id="stopBtn" class="btn" style="width:100%">STOP (S / Space)</button>
+</div>
+
+<div class="foot">
+  Keys: arrows=move, <code>Z</code>/<code>X</code>=turn, <code>0..9</code>=speed, <code>G</code>=grid, <code>Y</code>=clear map, <code>Space/S</code>=STOP.<br/>
+  Load page over <b>HTTP</b> (not HTTPS) to allow <code>ws://</code>.
+</div>

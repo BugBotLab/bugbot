@@ -1,0 +1,67 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>BugBot Web UI</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="icon" type="image/png" href="assets/img/green_bug.png"/>
+</head>
+<body>
+  <header>
+    <h1><img src="assets/img/green_bug.png" alt="" style="height:22px;width:auto;vertical-align:middle;margin-right:5px">BugBot</h1>
+    <div id="wsStatus" class="pill bad">WS: disconnected</div>
+    <div id="batteryStatus" class="pill">BAT: --.- V</div>
+    <div id="gpStatus" class="pill">GP: none</div>
+    <button id="fsBtn" title="Toggle fullscreen" style="margin-left:auto">
+      <svg id="fsIcon" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 4V1h3M10 1h3v3M13 10v3h-3M4 13H1v-3"/>
+      </svg>
+    </button>
+  </header>
+
+  <script>
+    const fsBtn  = document.getElementById('fsBtn');
+    const fsPath = document.querySelector('#fsIcon path');
+    fsBtn.onclick = () => {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    };
+    document.addEventListener('fullscreenchange', () => {
+      fsPath.setAttribute('d', document.fullscreenElement
+        ? 'M4 1v3H1M13 4h-3V1M10 13v-3h3M1 10h3v3'
+        : 'M1 4V1h3M10 1h3v3M13 10v3h-3M4 13H1v-3');
+    });
+  </script>
+
+  <main>
+    <section class="panel" id="panel-joyL"     data-partial="js/panels/joyL/joyL.html"></section>
+    <section class="panel" id="panel-viz"      data-partial="js/panels/viz/viz.html"></section>
+    <section class="panel" id="panel-controls" data-partial="js/panels/controls/controls.html"></section>
+  </main>
+
+  <!-- ws.js in its own tag so WS connects even if panel loading fails. -->
+  <script type="module" src="js/shared/ws.js"></script>
+  <script type="module">
+    async function tryImport(url) {
+      try { return await import(url); } catch(e) { console.error('import failed:', url, e); return null; }
+    }
+    const pm = await tryImport('./js/shared/partials.js');
+    if (pm) await pm.loadPartials();
+    await Promise.allSettled([
+      tryImport('./js/panels/joyL/joyL.js'),
+      tryImport('./js/panels/viz/viz.js'),
+      tryImport('./js/panels/controls/controls.js'),
+    ]);
+    // Auto-reload up to 3 times if panels are empty (transient server busy on first load)
+    const empty = [...document.querySelectorAll('[data-partial]')].some(p => !p.innerHTML.trim());
+    if (empty) {
+      const n = +(sessionStorage.getItem('rl') || 0);
+      if (n < 3) { sessionStorage.setItem('rl', n + 1); location.reload(); }
+    } else {
+      sessionStorage.removeItem('rl');
+    }
+  </script>
+</body>
+</html>
