@@ -1,0 +1,28 @@
+# Maps changed file paths to area labels (used by actions/labeler).
+"area:firmware":
+  - changed-files:
+      - any-glob-to-any-file: "firmware/**"
+
+"area:software":
+  - changed-files:
+      - any-glob-to-any-file: "software/**"
+
+"area:simulation":
+  - changed-files:
+      - any-glob-to-any-file: "simulation/**"
+
+"area:ros2":
+  - changed-files:
+      - any-glob-to-any-file: "ros2/**"
+
+"area:hardware":
+  - changed-files:
+      - any-glob-to-any-file: "hardware/**"
+
+"area:docs":
+  - changed-files:
+      - any-glob-to-any-file: ["docs/**", "**/*.md", "mkdocs.yml"]
+
+"area:ci":
+  - changed-files:
+      - any-glob-to-any-file: ".github/**"
