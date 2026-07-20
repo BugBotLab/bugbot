@@ -1,11 +1,12 @@
 # BugBot
 
-BugBot is a small holonomic robot. It moves in any direction at once (forward, sideways,
-and turning together) using four omni wheels mounted in an X, each driven directly off a
-motor axle. That direct-drive X-omni layout is deliberately simple, which makes its raw
-motion noisy: the drive couples the motion you ask for with parasitic rotation and
-vibration, so a plain "go forward" command does not travel straight. BugBot moves
-accurately because a full sensor suite closes the loop and applies continuous micro
+BugBot is a small holonomic robot that moves by **ultrasonic friction modulation**.
+Instead of wheels, its four feet are vibrated at ultrasonic frequencies; modulating the
+vibration modulates the effective friction between each foot and the ground, letting the
+robot slide in any direction at once (forward, sideways, and turning together).
+Friction-based actuation is inherently variable: effective friction shifts with surface,
+load, and amplitude, so a plain "go forward" command does not travel straight. BugBot
+moves accurately because a full sensor suite closes the loop and applies continuous micro
 corrections.
 
 That is the whole idea: **reliable motion out of deliberately unreliable actuation**, using
@@ -25,24 +26,32 @@ BugBot fuses four sensors to estimate where it really is and correct in real tim
 - **AprilTag** vision for absolute position,
 
 all combined in a 3-DOF (x, y, yaw) Extended Kalman Filter. The controller reads that
-estimate and nudges the four wheels many times a second to hold the commanded path.
+estimate and nudges the four feet many times a second to hold the commanded path.
+
+## Vision and edge AI
+
+The on-board camera does more than stream video. On the robot it provides AprilTag
+detection for absolute localisation; heavier computer vision runs at the edge, in the
+operator's browser (the web UI ships OpenCV.js face detection as a worked example), so
+students can build AI behaviours on top of BugBot using the compute they already have,
+with no extra hardware.
 
 ## Repository layout
 
 | Folder | Contents |
 | --- | --- |
-| `firmware/` | On-robot firmware (ESP-IDF). The X-omni drive mix (`MotionLib`), sensor drivers, the 3-DOF EKF pose service, runtime calibration, and an on-board web UI. |
+| `firmware/` | On-robot firmware (ESP-IDF). The friction-modulation drive mix (`MotionLib`), sensor drivers, the 3-DOF EKF pose service, runtime calibration, and an on-board web UI. |
 | `software/` | Host-side control. `web-ui/` is a browser control panel (WebSocket telemetry, camera view, OpenCV.js face detection). |
-| `simulation/` | Physics sim + reinforcement learning in NVIDIA Isaac Lab. Reproduces the chaotic X-omni drive and trains a corrective policy. *(In progress.)* |
-| `ros2/` | ROS 2 integration: a node that maps `/cmd_vel` (full Twist) to the four wheel commands and bridges the trained policy to the robot. *(In progress.)* |
+| `simulation/` | Physics sim + reinforcement learning in NVIDIA Isaac Lab. Reproduces the chaotic friction-modulated drive and trains a corrective policy. *(In progress.)* |
+| `ros2/` | ROS 2 integration: a node that maps `/cmd_vel` (full Twist) to the four foot drive commands and bridges the trained policy to the robot. *(In progress.)* |
 | `hardware/` | Mechanical only: CAD (STEP/STL), assembly guide, and BOM. Electronics/PCB design is intentionally not included. *(To be added.)* |
 | `docs/` | Architecture notes and the drive/sensing rationale. |
 
 ## The simulation, in short
 
-The simulation does not idealise the robot. It drives four omni wheels through BugBot's
-exact mix and injects the disturbances that make the real motion chaotic: per-wheel slip
-and friction variation, vibration and coupling between translation and rotation, actuation
+The simulation does not idealise the robot. It drives the four feet through BugBot's
+exact drive mix and injects the disturbances that make the real motion chaotic: per-foot
+friction variation, vibration and coupling between translation and rotation, actuation
 latency, and mass and centre-of-gravity jitter. A reinforcement-learning policy observes
 the same signals the real robot senses and learns the micro corrections needed to track a
 commanded holonomic velocity. The trained policy deploys back to the physical robot over
